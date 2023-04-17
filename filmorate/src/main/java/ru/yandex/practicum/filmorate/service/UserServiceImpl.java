@@ -11,10 +11,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserStorage userStorage;
+
     @Autowired
     public UserServiceImpl(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
+
     @Override
     public UserDto addUser(User user) {
         return userStorage.addUser(user);

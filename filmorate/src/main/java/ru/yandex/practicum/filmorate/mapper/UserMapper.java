@@ -5,12 +5,10 @@ import ru.yandex.practicum.filmorate.model.UserDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class UserMapper {
     private UserMapper() {
-
     }
 
     public static UserDto fromUserToUserDto(User user) {
@@ -39,9 +37,9 @@ public class UserMapper {
                 .build();
     }
 
-    public static List <UserDto> fromListUsersToListUsersDto(Collection<User> users) {
+    public static List<UserDto> fromListUsersToListUsersDto(Collection<User> users) {
         List<UserDto> usersDto = new ArrayList<>();
-        for(User user: users) {
+        for (User user : users) {
             usersDto.add(fromUserToUserDto(user));
         }
         return usersDto;

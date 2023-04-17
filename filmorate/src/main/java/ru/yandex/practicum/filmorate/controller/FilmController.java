@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.mapper.FilmMapper;
-import ru.yandex.practicum.filmorate.mapper.UserMapper;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.FilmDto;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -17,27 +16,28 @@ import java.util.List;
 @RequestMapping("/films")
 public class FilmController {
     private final FilmService filmService;
+
     @Autowired
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
     @GetMapping
-    public ResponseEntity<List<FilmDto>> readAllFilms(){
+    public ResponseEntity<List<FilmDto>> readAllFilms() {
         ResponseEntity<List<FilmDto>> response = new ResponseEntity<>(filmService.readAllFilms(), HttpStatus.valueOf(200));
         return response;
     }
 
     @PutMapping
     public ResponseEntity<FilmDto> updateFilm(@RequestBody Film film) {
-        if(FilmValidator.validateFilm(film)) {
+        if (FilmValidator.validateFilm(film)) {
             ResponseEntity<FilmDto> response = new ResponseEntity<>(filmService.updateFilm(film), HttpStatus.valueOf(200));
             if (response.getBody().getId() == 0L) {
                 return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film), HttpStatus.valueOf(500));
             }
             return response;
         }
-        return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film),HttpStatus.valueOf(200));
+        return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film), HttpStatus.valueOf(200));
     }
 
     @PostMapping
@@ -46,6 +46,6 @@ public class FilmController {
             ResponseEntity<FilmDto> response = new ResponseEntity<>(filmService.createFilm(film), HttpStatus.valueOf(200));
             return response;
         }
-        return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film),HttpStatus.valueOf(500));
+        return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film), HttpStatus.valueOf(500));
     }
 }

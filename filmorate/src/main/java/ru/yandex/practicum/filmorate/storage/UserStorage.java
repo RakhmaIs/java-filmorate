@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserStorage {
     UserDto addUser(User user);
+
     UserDto updateUser(User user);
+
     List<UserDto> readAllUsers();
 }

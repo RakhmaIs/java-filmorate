@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.FilmDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Component
 @Slf4j
 public class FilmStorageImpl implements FilmStorage {
@@ -19,14 +20,14 @@ public class FilmStorageImpl implements FilmStorage {
     public FilmDto createFilm(Film film) {
         film.setId(idGen);
         log.info("Фильм " + film + " успешно добавлен");
-        filmsMap.put(idGen++,film);
+        filmsMap.put(idGen++, film);
         return FilmMapper.fromFilmToFilmDto(film);
     }
 
     @Override
     public FilmDto updateFilm(Film film) {
-        if(filmsMap.containsKey(film.getId())) {
-            filmsMap.put(film.getId(),film);
+        if (filmsMap.containsKey(film.getId())) {
+            filmsMap.put(film.getId(), film);
             log.info("Фильм " + film + " успешно обновлен");//залогировать позитивный
             return FilmMapper.fromFilmToFilmDto(film);
         }

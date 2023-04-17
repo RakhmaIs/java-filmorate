@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+
 @Builder
 @Data
 public class UserDto {
@@ -12,7 +13,6 @@ public class UserDto {
     private String name;
     private String email;
     private LocalDate birthday;
-
-
-    }
+    
+}
 

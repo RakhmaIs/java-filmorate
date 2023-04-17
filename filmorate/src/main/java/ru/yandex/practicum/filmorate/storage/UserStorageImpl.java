@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.UserDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Component
 @Slf4j
 public class UserStorageImpl implements UserStorage {
@@ -21,14 +22,14 @@ public class UserStorageImpl implements UserStorage {
     public UserDto addUser(User user) {
         user.setId(idGen);
         log.info("Пользователь " + user + " успешно добавлен");
-        usersMap.put(idGen++,user);
+        usersMap.put(idGen++, user);
         return UserMapper.fromUserToUserDto(user);
     }
 
     @Override
     public UserDto updateUser(User user) {
-        if(usersMap.containsKey(user.getId())) {
-            usersMap.put(user.getId(),user);
+        if (usersMap.containsKey(user.getId())) {
+            usersMap.put(user.getId(), user);
             log.info("Пользователь " + user + " успешно обновлен");
             return UserMapper.fromUserToUserDto(user);
         }

@@ -31,11 +31,11 @@ public class UserController {
     @PutMapping
     public ResponseEntity<UserDto> updateUser(@RequestBody User user) {
         if (UserValidator.validateUser(user)) {
-            ResponseEntity<UserDto> response = new ResponseEntity<>(userService.updateUser(user), HttpStatus.valueOf(200));
-            if (response.getBody().getId() == 0L) {
-                return new ResponseEntity<>(UserMapper.fromUserToUserDto(user), HttpStatus.valueOf(500));
+            UserDto userDto = userService.updateUser(user);
+            if (userDto.getId() == 0L) {
+                return new ResponseEntity<>(userDto, HttpStatus.valueOf(500));
             }
-            return response;
+            return new ResponseEntity<>(userDto, HttpStatus.valueOf(200));
         }
         return new ResponseEntity<>(UserMapper.fromUserToUserDto(user), HttpStatus.valueOf(200));
     }

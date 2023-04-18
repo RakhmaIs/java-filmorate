@@ -9,7 +9,7 @@ public class FilmValidator {
     }
 
     public static boolean validateFilm(Film film) {
-        if (film == null || film.getDescription() == null || film.getReleaseDate() == null) {
+        if (film == null || film.getDescription() == null || film.getReleaseDate() == null || film.getName() == null || film.getDuration() == null) {
             return false;
         }
         if (film.getName().isBlank()) {
@@ -21,11 +21,6 @@ public class FilmValidator {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             return false;
         }
-        if (film.getDuration() < 0) {
-            return false;
-        }
-        return true;
-
+        return film.getDuration() >= 0;
     }
-
 }

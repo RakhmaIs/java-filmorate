@@ -24,18 +24,17 @@ public class FilmController {
 
     @GetMapping
     public ResponseEntity<List<FilmDto>> readAllFilms() {
-        ResponseEntity<List<FilmDto>> response = new ResponseEntity<>(filmService.readAllFilms(), HttpStatus.valueOf(200));
-        return response;
+        return new ResponseEntity<>(filmService.readAllFilms(), HttpStatus.valueOf(200));
     }
 
     @PutMapping
     public ResponseEntity<FilmDto> updateFilm(@RequestBody Film film) {
         if (FilmValidator.validateFilm(film)) {
-            ResponseEntity<FilmDto> response = new ResponseEntity<>(filmService.updateFilm(film), HttpStatus.valueOf(200));
-            if (response.getBody().getId() == 0L) {
-                return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film), HttpStatus.valueOf(500));
+            FilmDto filmDto = filmService.updateFilm(film);
+            if (filmDto.getId() == 0L) {
+                return new ResponseEntity<>(filmDto, HttpStatus.valueOf(500));
             }
-            return response;
+            return new ResponseEntity<>(filmDto, HttpStatus.valueOf(200));
         }
         return new ResponseEntity<>(FilmMapper.fromFilmToFilmDto(film), HttpStatus.valueOf(200));
     }

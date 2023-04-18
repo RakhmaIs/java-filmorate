@@ -21,6 +21,6 @@ public class UserValidator {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        return !user.getBirthday().isAfter(LocalDate.now());
+        return user.getBirthday() != null && !user.getBirthday().isAfter(LocalDate.now());
     }
 }

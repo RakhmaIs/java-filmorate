@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Builder
 @Data
@@ -13,6 +14,7 @@ public class UserDto {
     private String name;
     private String email;
     private LocalDate birthday;
+    private Set<Long> friendsIds;
 
 }
 

@@ -11,4 +11,6 @@ public interface FilmStorage {
     FilmDto updateFilm(Film film);
 
     List<FilmDto> readAllFilms();
+
+    Film getFilm(Long id);
 }

@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.UserDto;
 import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.validation.UserValidator;
 
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -40,8 +41,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<UserDto> addFriend(@PathVariable(name = "id") Long userId,
-                                             @PathVariable Long friendId) {
+    public ResponseEntity<UserDto> addFriend(@PathVariable(name = "id") @PositiveOrZero Long userId,
+                                             @PathVariable @PositiveOrZero Long friendId) {
         return new ResponseEntity<>(userService.addFriend(userId, friendId), HttpStatus.OK);
     }
 

@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.FilmDto;
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.validation.FilmValidator;
 
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -37,13 +38,13 @@ public class FilmController {
     @PostMapping
     public ResponseEntity<FilmDto> createFilm(@RequestBody Film film) {
         FilmValidator.validateFilm(film);
-        ResponseEntity<FilmDto> response = new ResponseEntity<>(filmService.createFilm(film), HttpStatus.valueOf(200));
-        return response;
+        return new ResponseEntity<>(filmService.createFilm(film), HttpStatus.valueOf(200));
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public ResponseEntity<FilmDto> addLikeToFilm(@PathVariable(name = "id") Long filmId,
-                                                 @PathVariable Long userId) {
+    public ResponseEntity<FilmDto> addLikeToFilm(@PathVariable(name = "id") @PositiveOrZero Long filmId,
+                                                 @PathVariable @PositiveOrZero
+                                                 Long userId) {
 
         return new ResponseEntity<>(filmService.addLikeToFilm(filmId, userId), HttpStatus.OK);
     }

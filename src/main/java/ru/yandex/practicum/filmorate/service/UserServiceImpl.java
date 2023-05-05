@@ -57,16 +57,14 @@ public class UserServiceImpl implements UserService {
     public UserDto deleteFriend(Long userId, Long friendId) {
         User firstUser = userStorage.getUser(userId);
         User secondUser = userStorage.getUser(friendId);
-        if (firstUser.getFriendsIds().contains(friendId)) {
-            secondUser.getFriendsIds().remove(friendId);
-        } else {
+        if (!firstUser.getFriendsIds().contains(friendId)) {
             throw new UserNotFoundException("Такой друг не найден");
         }
-        if (secondUser.getFriendsIds().contains(userId)) {
-            secondUser.getFriendsIds().remove(userId);
-        } else {
+        firstUser.getFriendsIds().remove(friendId);
+        if (!secondUser.getFriendsIds().contains(userId)) {
             throw new UserNotFoundException("Такой друг не найден");
         }
+        secondUser.getFriendsIds().remove(userId);
         return UserMapper.fromUserToUserDto(firstUser);
     }
 

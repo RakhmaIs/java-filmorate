@@ -34,6 +34,7 @@ public class UserMapper {
                 .login(userDto.getLogin())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
+                .friendsIds(userDto.getFriendsIds())
                 .build();
     }
 

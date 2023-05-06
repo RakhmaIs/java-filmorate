@@ -11,4 +11,6 @@ public interface UserStorage {
     UserDto updateUser(User user);
 
     List<UserDto> readAllUsers();
+
+    User getUser(Long id);
 }

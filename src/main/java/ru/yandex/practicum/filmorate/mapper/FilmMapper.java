@@ -22,6 +22,7 @@ public class FilmMapper {
                 .releaseDate(film.getReleaseDate())
                 .duration(film.getDuration())
                 .name(film.getName())
+                .likesIds(film.getLikesIds())
                 .build();
     }
 

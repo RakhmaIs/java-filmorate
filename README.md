@@ -44,20 +44,20 @@
 получение списка всех пользователей
 ```
 SELECT *
-FROM users
+FROM user
 ```
 получение информации о пользователе по его id
 
 ```
 SELECT *
-FROM users
+FROM user
 WHERE id = ?
 ```
 получение информации о фильме по его id
 ```
 SELECT f.*, mpt.rating_name, COUNT(flt.user_id) AS rate
-FROM films AS f
-LEFT JOIN mpa_rating AS mpt ON f.rating_id = mpt.rating_id
+FROM film AS f
+LEFT JOIN mpa_rating AS mpt ON f.film_id = mpt.film_id
 LEFT JOIN film_like AS fl ON f.film_id = fl.film_id
 WHERE f.id = 2
 GROUP BY f.id

@@ -27,17 +27,18 @@
 
 Схема отображает отношения таблиц в базе данных:
 
-* films - данные о фильмах (primary key - film_id, foreign key - rating_id,genre_id)
+* film - данные о фильмах (primary key - film_id, foreign key - rating_id,genre_id)
 * genre - названия жанров фильма (primary key - genre_id)
 * mpa_rating - определяет возрастное ограничение для фильма (primary key - rating_id)
-* film_likes - информация о лайках фильма и кто их поставил (primary key - like_id, foreign key - user_id, film_id)
-* users - данные о пользователях (primary key - user_id)
+* film_likes - информация о лайках фильма и кто их поставил (primary key -  film_id, foreign key - user_id)
+* user - данные о пользователях (primary key - user_id)
+* film_genre - связывает id фильма с id жанра(primary key - film_id)
 * friends - содержит информации о статусе «дружбы» между двумя пользователями (primary key - id,foreign key - friend_id,status)
     * status = 1 — в таблице две записи о дружбе двух пользователей (id1 = id2; id2 = id1),
     * status = 2 — в таблице одна запись о дружбе двух пользователей(id1 = id2).
 * friendship_status - содержит значение статуса дружбы по ключу 1 или 2
     
-![](https://github.com/RakhmaIs/java-filmorate/blob/d128ef24052a955921f0303a6a1394a64969ac50/ER-updated.png)
+![](https://github.com/RakhmaIs/java-filmorate/blob/e6e14075fb3a7d99d4fdaca0ab9307f76f49d577/ER.png)
 
 ### Примеры запросов:
 получение списка всех пользователей

@@ -37,7 +37,7 @@
     * status = 2 — в таблице одна запись о дружбе двух пользователей(id1 = id2).
 * friendship_status - содержит значение статуса дружбы по ключу 1 или 2
     
-![](https://github.com/RakhmaIs/java-filmorate/blob/7829dd6b21ee22c458040bcdcd43dd63d942957b/ER-diagramm.png)
+![](https://github.com/RakhmaIs/java-filmorate/blob/d128ef24052a955921f0303a6a1394a64969ac50/ER-updated.png)
 
 ### Примеры запросов:
 получение списка всех пользователей

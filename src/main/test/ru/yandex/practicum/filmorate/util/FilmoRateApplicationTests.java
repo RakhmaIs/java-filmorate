@@ -2,17 +2,20 @@ package ru.yandex.practicum.filmorate.util;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.AssertionsForClassTypes;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDBStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDBStorage;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +25,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@Sql(scripts = "/test_data.sql")
+@SqlGroup({
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "/schema.sql"),
+        @Sql(scripts = "/test_data.sql")
+})
 class FilmoRateApplicationTests {
     private final UserDBStorage userStorage;
     private final FilmDBStorage filmDBStorage;
@@ -30,7 +36,6 @@ class FilmoRateApplicationTests {
 
     @Test
     public void testFindUserById() {
-
         Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1L));
 
         assertThat(userOptional)
@@ -132,6 +137,7 @@ class FilmoRateApplicationTests {
 
     @Test
     public void readAllFilmsTest() {
+        List<Film> filmList = filmDBStorage.readAllFilms();
         Optional<Integer> filmsOptionalSize = Optional.of(filmDBStorage.readAllFilms().size());
         assertThat(filmsOptionalSize)
                 .isPresent()

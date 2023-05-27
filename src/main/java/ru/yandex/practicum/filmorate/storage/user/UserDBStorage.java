@@ -63,7 +63,7 @@ public class UserDBStorage implements UserStorage {
     public boolean userExists(Long userID) {
         String sqlQuery = "SELECT * FROM users WHERE user_id = ?";
         try {
-            jdbcTemplate.queryForObject(sqlQuery, this::MapToUSer, userID);
+            jdbcTemplate.queryForObject(sqlQuery, this::mapToUSer, userID);
             return true;
         } catch (DataAccessException e) {
             return false;
@@ -73,7 +73,7 @@ public class UserDBStorage implements UserStorage {
     @Override
     public List<User> readAllUsers() {
         String sqlQuery = "SELECT * FROM users";
-        List<User> allUsers = jdbcTemplate.query(sqlQuery, this::MapToUSer);
+        List<User> allUsers = jdbcTemplate.query(sqlQuery, this::mapToUSer);
         log.info("Метод readAllUsers() успешно выполнен");
         return allUsers;
 
@@ -86,7 +86,7 @@ public class UserDBStorage implements UserStorage {
             throw new UserNotFoundException("Пользователь с таким id - не найден");
         }
         String sqlQuery = "SELECT * FROM users WHERE user_id = ?";
-        User user = jdbcTemplate.queryForObject(sqlQuery, this::MapToUSer, id);
+        User user = jdbcTemplate.queryForObject(sqlQuery, this::mapToUSer, id);
         log.info("Метод getUserById(Long id) успешно выполнен для пользователя с id {}", id);
         return user;
     }
@@ -127,7 +127,7 @@ public class UserDBStorage implements UserStorage {
             throw new UserNotFoundException("Пользователь с таким id не найден");
         }
         String sqlQuery = "SELECT * FROM users WHERE user_id IN(SELECT friend_id FROM friends WHERE user_id = ?)";
-        List<User> friends = jdbcTemplate.query(sqlQuery, this::MapToUSer, userId);
+        List<User> friends = jdbcTemplate.query(sqlQuery, this::mapToUSer, userId);
         log.info("Метод findFriendsByUserId(Long userId) успешно выполнен для пользователя с id {}", userId);
         return friends;
     }
@@ -137,16 +137,16 @@ public class UserDBStorage implements UserStorage {
             log.error("Ошибка выполнения метода findCommonFriendsList(Long userId, Long friendId) для пользователей с id = {} и friendId = {}", userId, friendId);
             throw new UserNotFoundException("Пользователь или друг с таки id не найден");
         }
-        List<User> friendList_1 = findFriendsByUserId(userId);
-        List<User> friendList_2 = findFriendsByUserId(friendId);
+        List<User> friendListOne = findFriendsByUserId(userId);
+        List<User> friendListTwo = findFriendsByUserId(friendId);
 
-        friendList_1.retainAll(friendList_2);
+        friendListOne.retainAll(friendListTwo);
         log.info("Метод findCommonFriendsList(Long userId,Long friendId) успешно выполнен для пользователей с id = {} и friendId = {}", userId, friendId);
-        return friendList_1;
+        return friendListOne;
     }
 
 
-    private User MapToUSer(ResultSet resultSet, int rowNum) throws SQLException {
+    private User mapToUSer(ResultSet resultSet, int rowNum) throws SQLException {
         return User.builder()
                 .birthday(resultSet.getDate("birthday").toLocalDate())
                 .email(resultSet.getString("email"))

@@ -30,8 +30,8 @@ public class UserValidator {
         }
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
+
         }
     }
-
 }
 

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class FilmValidator {
     private FilmValidator() {
-        
+
     }
 
     public static void validateFilm(Film film) {
@@ -27,7 +27,7 @@ public class FilmValidator {
         }
         if (film.getMpa() == null) {
             throw new ValidationException(HttpStatus.BAD_REQUEST, "Rating не может быть null");
+
         }
     }
-
 }

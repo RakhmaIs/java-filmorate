@@ -8,7 +8,9 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.time.LocalDate;
 
 public class UserValidator {
-    private UserValidator() {}
+    private UserValidator() {
+
+    }
 
     public static void validateUser(User user) {
         if (user == null || user.getLogin() == null || user.getEmail() == null) {
@@ -30,6 +32,6 @@ public class UserValidator {
             user.setName(user.getLogin());
         }
     }
-    
+
 }
 

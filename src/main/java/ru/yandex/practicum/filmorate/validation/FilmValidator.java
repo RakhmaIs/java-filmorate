@@ -7,7 +7,9 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 
 public class FilmValidator {
-    private FilmValidator() {}
+    private FilmValidator() {
+        
+    }
 
     public static void validateFilm(Film film) {
         if (film == null || film.getDescription() == null || film.getReleaseDate() == null || film.getName() == null || film.getDuration() == null) {

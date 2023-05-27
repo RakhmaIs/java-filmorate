@@ -1,3 +1,4 @@
+
 package ru.yandex.practicum.filmorate.validation;
 
 import org.springframework.http.HttpStatus;
@@ -31,3 +32,4 @@ public class UserValidator {
         }
     }
 }
+

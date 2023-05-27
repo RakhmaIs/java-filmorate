@@ -1,3 +1,4 @@
+
 package ru.yandex.practicum.filmorate.validation;
 
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,9 @@ public class FilmValidator {
         if (film.getDuration() <= 0) {
             throw new ValidationException(HttpStatus.valueOf(500), "Длительность не может быть меньше или равна 0.");
         }
+        if(film.getMpa() == null ) {
+            throw new ValidationException(HttpStatus.BAD_REQUEST,"Rating не может быть null");
+        }
     }
 }
+

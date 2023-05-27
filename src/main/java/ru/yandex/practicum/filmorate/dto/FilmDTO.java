@@ -1,11 +1,12 @@
-package ru.yandex.practicum.filmorate.model;
-
+package ru.yandex.practicum.filmorate.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Film {
+public class FilmDTO {
     @Positive(message = "id не может быть отрицательным")
     private Long id;
     @NotBlank(message = "Название не может быть пустым")

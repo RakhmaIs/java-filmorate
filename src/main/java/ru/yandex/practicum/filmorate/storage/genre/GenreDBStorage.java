@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -28,11 +29,14 @@ public class GenreDBStorage implements GenreStorage {
     @Override
     public void addGenreToFilm(Film film) {
         String sqlQuery = "INSERT INTO film_genres(film_id,genre_id) VALUES(?,?)";
+        List<Object[]> parameters = new ArrayList<>();
         for (Genre filmGenre : film.getGenres()) {
-            jdbcTemplate.update(sqlQuery, film.getId(), filmGenre.getId());
+            parameters.add(new Object[]{film.getId(), filmGenre.getId()});
         }
+        jdbcTemplate.batchUpdate(sqlQuery, parameters);
         log.info("Метод addGenreToFilm(Film film) успешно выполнен");
     }
+
 
     @Override
     public void deleteGenreFromFilm(Film film) {
@@ -44,15 +48,14 @@ public class GenreDBStorage implements GenreStorage {
     @Override
     public Genre getGenreById(Integer id) {
         String sqlQuery = "SELECT * FROM genre WHERE genre_id = ?";
-        Genre genre;
         try {
-            genre = jdbcTemplate.queryForObject(sqlQuery, (rs, rowNum) -> createGenre(rs, rowNum), id);
+            Genre genre = jdbcTemplate.queryForObject(sqlQuery, (rs, rowNum) -> createGenre(rs, rowNum), id);
             log.info("Метод getGenreById(Integer id) успешно выполнен для жанра с id {}", id);
+            return genre;
         } catch (EmptyResultDataAccessException e) {
             log.error("Ошибка выполнения getGenreById(Integer id) для жанра с id {}", id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Жанра с таким id не существует");
         }
-        return genre;
     }
 
     @Override
@@ -71,11 +74,10 @@ public class GenreDBStorage implements GenreStorage {
 
     @Override
     public List<Genre> getGenreByFilmId(Long id) {
-        List<Genre> genres;
         String sqlQuery = "SELECT g.genre_id,g.genre_name FROM film_genres AS fa " +
                 "INNER JOIN genre AS g ON fa.genre_id = g.genre_id WHERE film_id = ?"; // если что поменять местами алиасы в селекте
         try {
-            genres = jdbcTemplate.query(sqlQuery, this::createGenre, id);
+            List<Genre> genres = jdbcTemplate.query(sqlQuery, this::createGenre, id);
             log.info("Метод getGenreByFilmId(Long id) успешно выполнен для фильма с id {}", id);
             return genres;
         } catch (DataAccessException e) {

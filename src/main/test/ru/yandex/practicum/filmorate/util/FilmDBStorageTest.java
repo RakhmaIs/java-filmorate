@@ -10,7 +10,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Mpa;
-import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDBStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDBStorage;
 
@@ -25,55 +24,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "/schema.sql"),
-        @Sql(scripts = "/test_data.sql")
+        @Sql(scripts = {"/data.sql", "/test_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 })
-class FilmoRateApplicationTests {
-    private final UserDBStorage userStorage;
-    private final FilmDBStorage filmDBStorage;
+class FilmDBStorageTest {
 
-
-    @Test
-    public void testFindUserById() {
-        Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1L));
-
-        assertThat(userOptional)
-                .isPresent()
-                .hasValueSatisfying(user ->
-                        assertThat(user).hasFieldOrPropertyWithValue("id", 1L)
-                );
-        assertThat(userOptional)
-                .isPresent()
-                .hasValueSatisfying(user ->
-                        assertThat(user).hasFieldOrPropertyWithValue("login", "dm1366"));
-    }
-
-    @Test
-    public void testFindAllUsers() {
-        Optional<List<User>> allUsersOptional = Optional.ofNullable(userStorage.readAllUsers());
-
-        assertThat(allUsersOptional)
-                .isPresent()
-                .hasValueSatisfying(users ->
-                        assertThat(users.size()).isEqualTo(4)
-
-                );
-    }
-
-    @Test
-    public void updateUserTest() {
-        Optional<User> userOptional = Optional.ofNullable(userStorage.readAllUsers().get(0));
-        assertThat(userOptional.get().getId()).isEqualTo(1);
-        assertThat(userOptional.get().getName()).isEqualTo("Dmitriy");
-
-        userOptional.get().setName("Sergio");
-        userStorage.updateUser(userOptional.get());
-
-        Optional<User> userWasUpdate = Optional.ofNullable(userStorage.readAllUsers().get(0));
-        assertThat(userWasUpdate).isPresent()
-                .hasValueSatisfying(user -> assertThat(user).hasFieldOrPropertyWithValue("id", 1L));
-        assertThat(userWasUpdate).isPresent()
-                .hasValueSatisfying(user -> assertThat(user).hasFieldOrPropertyWithValue("name", "Sergio"));
-    }
+    FilmDBStorage filmDBStorage;
 
     @Test
     public void testDeleteFilm() {

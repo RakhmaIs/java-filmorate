@@ -126,7 +126,9 @@ public class UserDBStorage implements UserStorage {
             log.error("Ошибка выполнения метода findFriendsByUserId(Long userId) для пользователя с id {}", userId);
             throw new UserNotFoundException("Пользователь с таким id не найден");
         }
-        String sqlQuery = "SELECT * FROM users WHERE user_id IN(SELECT friend_id FROM friends WHERE user_id = ?)";
+        String sqlQuery = "SELECT u.* FROM users u \n" +
+                "INNER JOIN friends f ON u.user_id = f.friend_id \n" +
+                "WHERE f.user_id = ?";
         List<User> friends = jdbcTemplate.query(sqlQuery, this::mapToUSer, userId);
         log.info("Метод findFriendsByUserId(Long userId) успешно выполнен для пользователя с id {}", userId);
         return friends;

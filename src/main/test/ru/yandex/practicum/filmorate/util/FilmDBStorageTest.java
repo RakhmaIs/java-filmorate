@@ -31,7 +31,7 @@ class FilmDBStorageTest {
     FilmDBStorage filmDBStorage;
 
     @Test
-    public void testDeleteFilm() {
+    void testDeleteFilm() {
 
         Optional<Integer> filmsOptionalSize = Optional.of(filmDBStorage.readAllFilms().size());
         assertThat(filmsOptionalSize)
@@ -48,7 +48,7 @@ class FilmDBStorageTest {
     }
 
     @Test
-    public void createFilmTest() {
+    void createFilmTest() {
         Mpa mpa = new Mpa();
         mpa.setId(1);
         Film film = new Film();
@@ -72,7 +72,7 @@ class FilmDBStorageTest {
     }
 
     @Test
-    public void updateFilm() {
+    void updateFilm() {
         Optional<Film> filmOptional = Optional.ofNullable(filmDBStorage.readAllFilms().get(0));
         assertThat(filmOptional.get().getId()).isEqualTo(1);
         assertThat(filmOptional.get().getName()).isEqualTo("Безудержное веселье");
@@ -89,7 +89,7 @@ class FilmDBStorageTest {
     }
 
     @Test
-    public void readAllFilmsTest() {
+    void readAllFilmsTest() {
         List<Film> filmList = filmDBStorage.readAllFilms();
         Optional<Integer> filmsOptionalSize = Optional.of(filmDBStorage.readAllFilms().size());
         assertThat(filmsOptionalSize)

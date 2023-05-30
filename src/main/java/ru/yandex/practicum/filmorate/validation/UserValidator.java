@@ -1,3 +1,4 @@
+
 package ru.yandex.practicum.filmorate.validation;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 public class UserValidator {
     private UserValidator() {
+
     }
 
     public static void validateUser(User user) {
@@ -31,3 +33,5 @@ public class UserValidator {
         }
     }
 }
+
+

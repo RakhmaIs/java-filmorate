@@ -27,7 +27,7 @@ public class UserDBStorageTest {
     UserDBStorage userStorage;
 
     @Test
-    public void testFindUserById() {
+    void testFindUserById() {
         Optional<User> userOptional = Optional.ofNullable(userStorage.getUserById(1L));
 
         assertThat(userOptional)
@@ -42,7 +42,7 @@ public class UserDBStorageTest {
     }
 
     @Test
-    public void testFindAllUsers() {
+    void testFindAllUsers() {
         Optional<List<User>> allUsersOptional = Optional.ofNullable(userStorage.readAllUsers());
 
         assertThat(allUsersOptional)
@@ -54,7 +54,7 @@ public class UserDBStorageTest {
     }
 
     @Test
-    public void updateUserTest() {
+    void updateUserTest() {
         Optional<User> userOptional = Optional.ofNullable(userStorage.readAllUsers().get(0));
         assertThat(userOptional.get().getId()).isEqualTo(1);
         assertThat(userOptional.get().getName()).isEqualTo("Dmitriy");

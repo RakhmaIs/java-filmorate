@@ -61,15 +61,14 @@ public class GenreDBStorage implements GenreStorage {
     @Override
     public List<Genre> getAllGenres() { // ++ DTO
         String sqlQuery = "SELECT * FROM genre";
-        List<Genre> allGenres;
         try {
-            allGenres = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> createGenre(rs, rowNum));
+            List<Genre> allGenres = jdbcTemplate.query(sqlQuery, (rs, rowNum) -> createGenre(rs, rowNum));
             log.info("Метод getAllGenres() успешно выполнен.");
+            return allGenres;
         } catch (DataAccessException e) {
             log.error("Ошибка выполнения getAllGenres().");
             throw new RuntimeException(e);
-        }
-        return allGenres;
+        }        
     }
 
     @Override
